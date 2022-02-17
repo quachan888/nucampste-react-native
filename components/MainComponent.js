@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Direactory from './DirectoryComponent';
+import Directory from './DirectoryComponent';
 import { CAMPSITES } from '../shared/campsites';
 
 class Main extends Component {
@@ -11,7 +11,7 @@ class Main extends Component {
     }
 
     render() {
-        return <Direactory campsites={this.state.campsites} />;
+        return <Directory campsites={this.state.campsites} />;
     }
 }
 
