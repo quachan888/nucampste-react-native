@@ -8,7 +8,9 @@ export const fetchComments = () => (dispatch) => {
                 if (response.ok) {
                     return response;
                 } else {
-                    const error = new Error(`Error ${response.status}: ${response.statusText}`);
+                    const error = new Error(
+                        `Error ${response.status}: ${response.statusText}`
+                    );
                     error.response = response;
                     throw error;
                 }
@@ -42,7 +44,9 @@ export const fetchCampsites = () => (dispatch) => {
                 if (response.ok) {
                     return response;
                 } else {
-                    const error = new Error(`Error ${response.status}: ${response.statusText}`);
+                    const error = new Error(
+                        `Error ${response.status}: ${response.statusText}`
+                    );
                     error.response = response;
                     throw error;
                 }
@@ -80,7 +84,9 @@ export const fetchPromotions = () => (dispatch) => {
                 if (response.ok) {
                     return response;
                 } else {
-                    const error = new Error(`Error ${response.status}: ${response.statusText}`);
+                    const error = new Error(
+                        `Error ${response.status}: ${response.statusText}`
+                    );
                     error.response = response;
                     throw error;
                 }
@@ -118,7 +124,9 @@ export const fetchPartners = () => (dispatch) => {
                 if (response.ok) {
                     return response;
                 } else {
-                    const error = new Error(`Error ${response.status}: ${response.statusText}`);
+                    const error = new Error(
+                        `Error ${response.status}: ${response.statusText}`
+                    );
                     error.response = response;
                     throw error;
                 }
@@ -145,4 +153,15 @@ export const partnersFailed = (errMess) => ({
 export const addPartners = (partners) => ({
     type: ActionTypes.ADD_PARTNERS,
     payload: partners
+});
+
+export const postFavorite = (campsiteId) => (dispatch) => {
+    setTimeout(() => {
+        dispatch(addFavorite(campsiteId));
+    }, 2000);
+};
+
+export const addFavorite = (campsiteId) => ({
+    type: ActionTypes.ADD_FAVORITE,
+    payload: campsiteId
 });
