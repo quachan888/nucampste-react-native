@@ -10,7 +10,7 @@ import {
     StyleSheet,
     SafeAreaView
 } from 'react-native';
-import { Card, Icon } from 'react-native-elements';
+import { Card, Icon, Input, Rating } from 'react-native-elements';
 import { COMMENTS } from '../shared/comments';
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
@@ -69,6 +69,12 @@ function RenderComments({ comments }) {
             <View style={{ margin: 10 }}>
                 <Text style={{ fontSize: 14 }}>{item.text}</Text>
                 <Text style={{ fontSize: 12 }}>{item.rating}</Text>
+                <Rating
+                    startingValue={item.rating}
+                    imageSize={10}
+                    style={{ alignItems: 'flex-start', paddingVertical: '5%' }}
+                    readonly
+                />
                 <Text style={{ fontSize: 12 }}>{`-- ${item.author}, ${item.date}`}</Text>
             </View>
         );
@@ -89,12 +95,28 @@ class CampsiteInfo extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            showModal: false
+            showModal: false,
+            rating: 5,
+            author: '',
+            text: ''
         };
     }
 
     toggleModal() {
         this.setState({ showModal: !this.state.showModal });
+    }
+
+    handleComment(campsiteId) {
+        console.log(JSON.stringify(this.state));
+        this.toggleModal();
+    }
+
+    resetForm() {
+        this.setState({
+            rating: 5,
+            author: '',
+            text: ''
+        });
     }
 
     markFavorite(campsiteId) {
@@ -129,15 +151,48 @@ class CampsiteInfo extends Component {
                     visible={this.state.showModal}
                     onRequestClose={() => this.toggleModal()}
                 >
-                    <View style={styles.modal}>
+                    <SafeAreaView style={styles.modal}>
+                        <Rating
+                            showRating
+                            startingValue={this.state.rating}
+                            imageSize={40}
+                            onFinishRating={(rating) => this.setState({ rating: rating })}
+                            style={{ paddingVertical: 10 }}
+                        />
+
+                        <Input
+                            placeholder="Author"
+                            leftIcon={{ type: 'font-awesome', name: 'user-o' }}
+                            leftIconContainerStyle={{ paddingRight: 10 }}
+                            onChangeText={(value) => this.setState({ author: value })}
+                        />
+                        <Input
+                            placeholder="Comment"
+                            leftIcon={{ type: 'font-awesome', name: 'comment-o' }}
+                            leftIconContainerStyle={{ paddingRight: 10 }}
+                            onChangeText={(value) => this.setState({ text: value })}
+                        />
                         <View style={{ margin: 10 }}>
                             <Button
-                                onPress={() => this.toggleModal()}
-                                color="red"
+                                onPress={() => {
+                                    this.handleComment(campsiteId);
+                                    this.resetForm();
+                                }}
+                                color="#5637DD"
+                                title="Submit"
+                            />
+                        </View>
+                        <View style={{ margin: 10 }}>
+                            <Button
+                                onPress={() => {
+                                    this.toggleModal();
+                                    this.resetForm();
+                                }}
+                                color="#808080"
                                 title="Cancel"
                             />
                         </View>
-                    </View>
+                    </SafeAreaView>
                 </Modal>
             </ScrollView>
         );
