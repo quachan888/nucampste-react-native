@@ -94,8 +94,8 @@ function RenderCampsite(props) {
         return (
             <Animatable.View
                 animation="fadeInDown"
-                duration={2000}
-                delay={1000}
+                duration={500}
+                delay={500}
                 ref={view}
                 {...panResponder.panHandlers}
             >
@@ -164,7 +164,7 @@ function RenderComments({ comments }) {
     };
 
     return (
-        <Animatable.View animation="fadeInUp" duration={2000} delay={1000}>
+        <Animatable.View animation="fadeInUp" duration={500} delay={500}>
             <Card title="Comments">
                 <FlatList
                     data={comments}

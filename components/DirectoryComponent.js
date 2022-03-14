@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { FlatList, View, Text } from 'react-native';
-import { ListItem } from 'react-native-elements';
 import { Tile } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
@@ -22,7 +21,7 @@ class Directory extends Component {
         const { navigate } = this.props.navigation;
         const renderDirectoryItem = ({ item }) => {
             return (
-                <Animatable.View animation="fadeInRightBig" duration={2000}>
+                <Animatable.View animation="fadeInRightBig" duration={500}>
                     <Tile
                         title={item.name}
                         caption={item.description}
