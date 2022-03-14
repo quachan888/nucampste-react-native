@@ -49,7 +49,7 @@ class Home extends Component {
     animate() {
         Animated.timing(this.state.scaleValue, {
             toValue: 1,
-            duration: 1500,
+            duration: 1000,
             useNativeDriver: true
         }).start();
     }

@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as Animatable from 'react-native-animatable';
+import * as Notifications from 'expo-notifications';
 
 class Reservation extends Component {
     constructor(props) {
@@ -37,6 +38,34 @@ class Reservation extends Component {
         });
     }
 
+    async presentLocalNotification(date) {
+        function sendNotification() {
+            Notifications.setNotificationHandler({
+                handleNotification: async () => ({
+                    shouldShowAlert: true
+                })
+            });
+
+            Notifications.scheduleNotificationAsync({
+                content: {
+                    title: 'Your Campsite Reservation Search',
+                    bodu: `Search for ${date} requested`
+                },
+                trigger: null
+            });
+        }
+
+        let permissions = await Notifications.getPermissionsAsync();
+
+        if (!permissions.granted) {
+            permissions = await Notifications.requestPermissionsAsync();
+        }
+
+        if (permissions.granted) {
+            sendNotification();
+        }
+    }
+
     handleReservation() {
         console.log(JSON.stringify(this.state));
 
@@ -57,6 +86,9 @@ class Reservation extends Component {
                 {
                     text: 'OK',
                     onPress: () => {
+                        this.presentLocalNotification(
+                            this.state.date.toLocaleDateString('en-US')
+                        );
                         this.resetForm();
                         console.log('OK pressed');
                     }
@@ -69,7 +101,7 @@ class Reservation extends Component {
     render() {
         return (
             <ScrollView>
-                <Animatable.View animation="zoomIn" duration={2000} delay={1000}>
+                <Animatable.View animation="zoomIn" duration={500} delay={100}>
                     <View style={styles.formRow}>
                         <Text style={styles.formLabel}>Number of Campers</Text>
                         <Picker
