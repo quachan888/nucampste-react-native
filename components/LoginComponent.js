@@ -7,6 +7,7 @@ import * as Permissions from 'expo-permissions';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { baseUrl } from '../shared/baseUrl';
 import * as ImageManipulator from 'expo-image-manipulator';
+import * as MediaLibrary from 'expo-media-library';
 
 class LoginTab extends Component {
     constructor(props) {
@@ -145,6 +146,7 @@ class RegisterTab extends Component {
             });
             if (!capturedImage.cancelled) {
                 console.log('getImageFromCamera', capturedImage);
+                MediaLibrary.saveToLibraryAsync(capturedImage.uri);
                 this.processImage(capturedImage.uri);
             }
         }
