@@ -72,8 +72,8 @@ class Reservation extends Component {
         Alert.alert(
             'Begin Search',
             `Number of Campers: ${this.state.campers} \n Hike-In? ${
-                this.state.hikeIn
-            } \n Date: ${Intl.DateTimeFormat().format(this.state.date)}`,
+                this.state.hikeIn ? 'Yes' : 'No'
+            } \n Date: ${this.state.date.toLocaleDateString('en-US')}`,
             [
                 {
                     text: 'Cancel',
